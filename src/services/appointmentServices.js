@@ -6,11 +6,7 @@ async function search(queryString) {
 
     const { rows: dataResult } = await appointmentRespositories.search(queryString)
 
-    let data = dataResult.map(row => ({
-        name: row.name, specialty: row.specialty, location: row.location
-    }))
-
-    return data
+    return dataResult
 }
 
 export default {

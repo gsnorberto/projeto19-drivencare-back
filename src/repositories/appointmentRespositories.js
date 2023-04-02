@@ -3,7 +3,9 @@ import db from "../config/dbConnection.js"
 async function search(queryString) {
     return await db.query(
         `
-            SELECT * FROM users
+            SELECT
+                name, specialty, location
+            FROM users
             WHERE
                 user_type = 'doctor' and
                 LOWER(name) LIKE LOWER('%${queryString}%') or

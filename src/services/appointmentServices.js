@@ -13,6 +13,11 @@ async function search(queryString) {
     return dataResult
 }
 
+async function getAvailableTime(doctorId) {
+    const { rows: dataResult } = await appointmentRespositories.getAvailableTime(doctorId)
+    return dataResult
+}
+
 async function addAvailableTime({doctorId, date, time}){
     // Check date and time format
     let dateIsValid = moment(date, 'YYYY-MM-DD',true).isValid()
@@ -36,5 +41,6 @@ async function addAvailableTime({doctorId, date, time}){
 
 export default {
     search,
-    addAvailableTime
+    addAvailableTime,
+    getAvailableTime
 }

@@ -7,9 +7,9 @@ const appointmentRoutes = Router()
 
 appointmentRoutes.get('/doctors', appointmentControllers.search)
 appointmentRoutes.post(
-    '/doctors/schedule/:doctorId',
+    '/doctors/:doctorId/schedule',
     appointmentControllers.addAvailableTime
 )
-appointmentRoutes.get('/doctors/schedule/:doctorId', appointmentControllers.search)
+appointmentRoutes.get('/doctors/:doctorId/schedule', appointmentControllers.getAvailableTime)
 
 export default appointmentRoutes

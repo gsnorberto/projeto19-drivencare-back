@@ -36,8 +36,18 @@ async function checkAvailableTime({doctorId, dateAndTime}) {
     )
 }
 
+async function getAvailableTime(doctorId) {
+    return await db.query(
+        `
+            SELECT * FROM available_time
+            WHERE doctor_id = '${doctorId}'
+        `
+    )
+}
+
 export default {
     search,
     addAvailableTime,
-    checkAvailableTime
+    checkAvailableTime,
+    getAvailableTime
 }

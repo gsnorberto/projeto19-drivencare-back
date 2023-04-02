@@ -5,6 +5,10 @@ export function handleApplicationErrors(err, req, res, next) {
         return res.status(httpStatus.CONFLICT).send({ message: err.message })
     }
 
+    if(err.name === 'DataNotFound') {
+        return res.status(httpStatus.NOT_FOUND).send({ message: err.message })
+    }
+
     if(err.name === 'EmptyFields' || err.name === 'InvalidData') {
         return res.status(httpStatus.BAD_REQUEST).send({ message: err.message })
     }

@@ -19,8 +19,16 @@ function invalidData(message){
     }
 }
 
+function dataNotFound(message){
+    return {
+        name: "DataNotFound",
+        message
+    }
+}
+
 export default {
     conflictError,
     emptyFields,
-    invalidData
+    invalidData,
+    dataNotFound
 }

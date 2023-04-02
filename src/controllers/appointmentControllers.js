@@ -12,6 +12,19 @@ async function search(req, res, next) {
     }
 }
 
+async function addAvailableTime(req, res, next) {
+    let { doctorId } = req.params
+    let { date, time } = req.body
+
+    try{
+        await appointmentServices.addAvailableTime({doctorId, date, time})
+        return res.sendStatus(status.CREATED)
+    } catch(error){
+        next(error)
+    }
+}
+
 export default {
-    search
+    search,
+    addAvailableTime
 }

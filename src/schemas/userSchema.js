@@ -1,6 +1,6 @@
 import joi from 'joi'
 
-export const userSchema = joi.object({
+export const user = joi.object({
     email: joi.string().email().required(),
     password: joi.string().required(),
     name: joi.string().required(),
@@ -8,3 +8,7 @@ export const userSchema = joi.object({
     specialty: joi.any().optional(),
     location: joi.any().optional()
 })
+
+export default {
+    user
+}

@@ -12,10 +12,32 @@ async function search(queryString) {
                 LOWER(specialty) LIKE LOWER('%${queryString}%') or
                 LOWER(location) LIKE LOWER('%${queryString}%')
             ORDER BY name;
-        `,
+        `
+    )
+}
+
+async function addAvailableTime({doctorId, dateAndTime}) {
+    await db.query(
+        `
+            INSERT INTO available_time 
+                (doctor_id, date_time)
+            VALUES
+                ('${doctorId}', '${dateAndTime}');
+        `
+    )
+}
+
+async function checkAvailableTime({doctorId, dateAndTime}) {
+    return await db.query(
+        `
+            SELECT * FROM available_time
+            WHERE doctor_id = '${doctorId}' and date_time = '${dateAndTime}'
+        `
     )
 }
 
 export default {
-    search
+    search,
+    addAvailableTime,
+    checkAvailableTime
 }

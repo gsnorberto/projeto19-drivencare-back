@@ -32,9 +32,20 @@ async function createDoctor({email, password, name, user_type, specialty, locati
     )
 }
 
+async function findDoctorById(doctorId) {
+    return await db.query(
+        `
+            SELECT * FROM users
+            WHERE id = $1 and user_type = 'doctor';
+        `,
+        [doctorId]
+    )
+}
+
 
 export default {
     findByEmail,
     createPatient,
-    createDoctor
+    createDoctor,
+    findDoctorById
 }

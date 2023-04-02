@@ -5,6 +5,6 @@ export const userSchema = joi.object({
     password: joi.string().required(),
     name: joi.string().required(),
     user_type: joi.string().valid('doctor', 'patient'),
-    specialty: joi.string(),
-    location: joi.string()
+    specialty: joi.any().optional(),
+    location: joi.any().optional()
 })

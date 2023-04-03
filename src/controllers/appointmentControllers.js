@@ -24,6 +24,17 @@ async function addAvailableTime(req, res, next) {
     }
 }
 
+async function scheduleAppointment(req, res, next) {
+    let {patientId, doctorId, date, time, observations} = req.body
+
+    try{
+        await appointmentServices.scheduleAppointment({patientId, doctorId, date, time, observations})
+        return res.sendStatus(status.CREATED)
+    } catch(error){
+        next(error)
+    }
+}
+
 async function getAvailableTime(req, res, next) {
     let { doctorId } = req.params
 
@@ -38,5 +49,6 @@ async function getAvailableTime(req, res, next) {
 export default {
     search,
     addAvailableTime,
-    getAvailableTime
+    getAvailableTime,
+    scheduleAppointment
 }

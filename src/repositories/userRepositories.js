@@ -42,10 +42,21 @@ async function findDoctorById(doctorId) {
     )
 }
 
+async function findPatientById(patientId) {
+    return await db.query(
+        `
+            SELECT * FROM users
+            WHERE id = $1 and user_type = 'patient';
+        `,
+        [patientId]
+    )
+}
+
 
 export default {
     findByEmail,
     createPatient,
     createDoctor,
-    findDoctorById
+    findDoctorById,
+    findPatientById
 }

@@ -45,9 +45,33 @@ async function getAvailableTime(doctorId) {
     )
 }
 
+async function scheduleAppointment({patientId, doctorId, dateAndTime, observations}) {
+    await db.query(
+        `
+            INSERT INTO pending_appointment 
+                (patient_id, doctor_id, date_time, observations)
+            VALUES
+                ('${patientId}', '${doctorId}', '${dateAndTime}', '${observations}');
+        `
+    )
+}
+
+async function confirmAppointment({patientId, doctorId, dateAndTime, observations}) {
+    await db.query(
+        `
+            INSERT INTO confirmed_appointment 
+                (patient_id, doctor_id, date_time, observations)
+            VALUES
+                ('${patientId}', '${doctorId}', '${dateAndTime}', '${observations}');
+        `
+    )
+}
+
 export default {
     search,
     addAvailableTime,
     checkAvailableTime,
-    getAvailableTime
+    getAvailableTime,
+    scheduleAppointment,
+    confirmAppointment
 }

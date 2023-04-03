@@ -18,6 +18,27 @@ async function getAvailableTime(doctorId) {
     return dataResult
 }
 
+async function scheduleAppointment({patientId, doctorId, date, time, observations}) {
+    //check if patient exists
+    let {rowCount: userExists} = await userRepositories.findPatientById(patientId)
+    if(!userExists) throw errors.dataNotFound('patientId not found')
+
+    // Check date and time format
+    let dateIsValid = moment(date, 'YYYY-MM-DD',true).isValid()
+    let timeIsValid = moment(time, 'hh:mm:ss',true).isValid()
+    if(!dateIsValid || !timeIsValid) throw errors.invalidData('Invalid "date" or "time". Correct format is: "YYYY-MM-DD" and "hh:mm:ss"')
+
+    // Timestamp format
+    let dateAndTime = `${date} ${time}`
+
+    //check if schedule exists
+    let {rowCount: scheduleAvailable} = await appointmentRespositories.checkAvailableTime({doctorId, dateAndTime})
+    if(!scheduleAvailable) throw errors.dataNotFound('Schedule not found')
+
+    //save schedule
+    await appointmentRespositories.scheduleAppointment({patientId, doctorId, dateAndTime, observations})
+}
+
 async function addAvailableTime({doctorId, date, time}){
     // Check date and time format
     let dateIsValid = moment(date, 'YYYY-MM-DD',true).isValid()
@@ -42,5 +63,6 @@ async function addAvailableTime({doctorId, date, time}){
 export default {
     search,
     addAvailableTime,
-    getAvailableTime
+    getAvailableTime,
+    scheduleAppointment
 }
